@@ -1,0 +1,37 @@
+# ================= Deployment =================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpro-rmq
+  namespace: vprofile
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: vpro-rmq }
+  template:
+    metadata:
+      labels: { app: vpro-rmq }
+    spec:
+      containers:
+        - name: vpro-rmq
+          image: alnaqib/vprofile-rmq:1.0
+          ports:
+            - containerPort: 5672      # AMQP
+            - containerPort: 15672     # management UI
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              valueFrom: { secretKeyRef: { name: app-secret, key: rmq-user } }
+            - name: RABBITMQ_DEFAULT_PASS
+              valueFrom: { secretKeyRef: { name: app-secret, key: rmq-password } }
+---
+# ================= Service (name MUST be rmq01) =================
+apiVersion: v1
+kind: Service
+metadata:
+  name: rmq01                       # app talks to rmq01.vprofile:5672
+  namespace: vprofile
+spec:
+  selector: { app: vpro-rmq }
+  ports:
+    - port: 5672
+      targetPort: 5672

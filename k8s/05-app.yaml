@@ -1,0 +1,52 @@
+# ================= Deployment =================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpro-app
+  namespace: vprofile
+spec:
+  replicas: 2                          # the app tier is stateless => scale freely
+  selector:
+    matchLabels: { app: vpro-app }
+  template:
+    metadata:
+      labels: { app: vpro-app }
+    spec:
+      # ---- wait for the backing services before Tomcat starts ----
+      initContainers:
+        - name: wait-db
+          image: busybox:1.36
+          command: ['sh','-c','until nc -z db01 3306;  do echo "waiting for db01";  sleep 3; done']
+        - name: wait-mc
+          image: busybox:1.36
+          command: ['sh','-c','until nc -z mc01 11211; do echo "waiting for mc01";  sleep 3; done']
+        - name: wait-rmq
+          image: busybox:1.36
+          command: ['sh','-c','until nc -z rmq01 5672; do echo "waiting for rmq01"; sleep 3; done']
+      containers:
+        - name: vpro-app
+          image: alnaqib/vprofile-app:1.0
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet: { path: /, port: 8080 }
+            initialDelaySeconds: 40
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket: { port: 8080 }
+            initialDelaySeconds: 60
+            periodSeconds: 15
+---
+# ================= Service (NodePort -> reached by HAProxy) =================
+apiVersion: v1
+kind: Service
+metadata:
+  name: app01
+  namespace: vprofile
+spec:
+  type: NodePort
+  selector: { app: vpro-app }
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080               # every node exposes :30080 -> app pods

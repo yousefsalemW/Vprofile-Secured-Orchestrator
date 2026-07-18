@@ -1,0 +1,31 @@
+# ================= Deployment =================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpro-mc
+  namespace: vprofile
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: vpro-mc }
+  template:
+    metadata:
+      labels: { app: vpro-mc }
+    spec:
+      containers:
+        - name: vpro-mc
+          image: alnaqib/vprofile-mc:1.0
+          ports:
+            - containerPort: 11211
+---
+# ================= Service (name MUST be mc01) =================
+apiVersion: v1
+kind: Service
+metadata:
+  name: mc01                        # app talks to mc01.vprofile:11211
+  namespace: vprofile
+spec:
+  selector: { app: vpro-mc }
+  ports:
+    - port: 11211
+      targetPort: 11211

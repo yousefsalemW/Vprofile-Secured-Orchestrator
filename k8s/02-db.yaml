@@ -1,0 +1,64 @@
+# ================= PersistentVolumeClaim =================
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-pvc
+  namespace: vprofile
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: local-path      # provided by local-path-provisioner
+  resources:
+    requests:
+      storage: 3Gi
+---
+# ================= Deployment =================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpro-db
+  namespace: vprofile
+spec:
+  replicas: 1                       # a single DB pod owns the volume (RWO)
+  selector:
+    matchLabels: { app: vpro-db }
+  strategy:
+    type: Recreate                  # never run 2 pods on one RWO volume
+  template:
+    metadata:
+      labels: { app: vpro-db }
+    spec:
+      containers:
+        - name: vpro-db
+          image: alnaqib/vprofile-db:1.0
+          # force native password => old JDBC connects over plain TCP with no
+          # caching_sha2 / public-key retrieval issues
+          args: ["--default-authentication-plugin=mysql_native_password"]
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom: { secretKeyRef: { name: app-secret, key: db-root-password } }
+            - name: MYSQL_USER
+              valueFrom: { secretKeyRef: { name: app-secret, key: db-user } }
+            - name: MYSQL_PASSWORD
+              valueFrom: { secretKeyRef: { name: app-secret, key: db-password } }
+          volumeMounts:
+            - name: db-data
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: db-pvc
+---
+# ================= Service (name MUST be db01) =================
+apiVersion: v1
+kind: Service
+metadata:
+  name: db01                        # app talks to db01.vprofile:3306
+  namespace: vprofile
+spec:
+  selector: { app: vpro-db }
+  ports:
+    - port: 3306
+      targetPort: 3306
+  # ClusterIP (default) => internal only
