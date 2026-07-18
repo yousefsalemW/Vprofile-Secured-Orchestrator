@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Groups — HA Kubernetes Cluster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Cairo:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sacramento&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f1a;
+    --panel:#0e1524;
+    --panel-2:#111a2c;
+    --grid:rgba(86,124,180,.09);
+    --grid-strong:rgba(86,124,180,.16);
+    --ink:#e6edf3;
+    --muted:#8b98a5;
+    --line:#233045;
+    --orange:#ff9900;      /* HAProxy / entry  */
+    --purple:#a78bfa;      /* Control plane    */
+    --teal:#2dd4bf;        /* Workers          */
+    --danger:#f87171;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    background-image:
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px),
+      linear-gradient(var(--grid-strong) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid-strong) 1px,transparent 1px);
+    background-size:28px 28px,28px 28px,140px 140px,140px 140px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:48px 28px 24px}
+
+  /* ---------- Header ---------- */
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.32em;color:var(--orange);text-transform:uppercase;margin-bottom:14px}
+  h1{font-size:40px;font-weight:700;margin:0 0 8px;letter-spacing:-.5px;line-height:1.1}
+  h1 .thin{color:var(--muted);font-weight:400}
+  .sub{font-family:'Cairo',sans-serif;color:var(--muted);font-size:16px;line-height:1.9;max-width:760px;direction:rtl}
+  .meta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:rgba(255,255,255,.02)}
+  .chip b{color:var(--ink);font-weight:500}
+
+  hr.div{border:0;border-top:1px solid var(--line);margin:34px 0}
+
+  /* ---------- Legend ---------- */
+  .legend{display:flex;gap:26px;flex-wrap:wrap;margin:6px 0 30px}
+  .lg{display:flex;align-items:center;gap:9px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted)}
+  .dot{width:12px;height:12px;border-radius:3px;box-shadow:0 0 10px currentColor}
+  .lg b{color:var(--ink);font-weight:500}
+
+  /* ---------- Section titles ---------- */
+  .sec-title{display:flex;align-items:baseline;gap:12px;margin:40px 0 18px}
+  .sec-title .num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--orange)}
+  .sec-title h2{font-size:22px;font-weight:600;margin:0;letter-spacing:-.2px}
+
+  /* ---------- Topology SVG frame ---------- */
+  .diagram{background:linear-gradient(180deg,rgba(14,21,36,.7),rgba(10,15,26,.4));border:1px solid var(--line);border-radius:16px;padding:8px}
+  svg{display:block;width:100%;height:auto}
+
+  /* ---------- SG cards ---------- */
+  .cards{display:grid;grid-template-columns:1fr;gap:20px}
+  .card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
+  .card-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}
+  .card-head .l{display:flex;align-items:center;gap:12px}
+  .badge-role{width:10px;height:34px;border-radius:4px}
+  .card-head h3{margin:0;font-size:17px;font-weight:600;font-family:'JetBrains Mono',monospace;letter-spacing:-.2px}
+  .card-head .role{font-family:'Cairo',sans-serif;font-size:13px;color:var(--muted);direction:rtl}
+  .card-head .count{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+
+  table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace}
+  thead th{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:left;padding:11px 20px;background:rgba(255,255,255,.015);border-bottom:1px solid var(--line)}
+  tbody td{font-size:12.5px;padding:12px 20px;border-bottom:1px solid rgba(35,48,69,.55);vertical-align:middle}
+  tbody tr:last-child td{border-bottom:0}
+  .port{color:var(--orange);font-weight:700}
+  .proto{color:var(--muted)}
+  .src-sg{color:var(--purple);font-weight:500}
+  .src-teal{color:var(--teal);font-weight:500}
+  .src-open{color:var(--danger);font-weight:500}
+  .src-admin{color:var(--ink)}
+  .why{font-family:'Cairo',sans-serif;color:var(--muted);font-size:12.5px;direction:rtl}
+  .tag{display:inline-block;font-size:9.5px;padding:2px 7px;border-radius:5px;margin-left:6px;font-weight:700;letter-spacing:.05em;vertical-align:middle}
+  .tag.opt{background:rgba(139,152,165,.14);color:var(--muted)}
+
+  /* ---------- Notes ---------- */
+  .notes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+  .note{border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:10px;padding:16px 18px;background:var(--panel-2)}
+  .note.p{border-left-color:var(--purple)}
+  .note.t{border-left-color:var(--teal)}
+  .note.d{border-left-color:var(--danger)}
+  .note h4{margin:0 0 8px;font-size:13px;font-family:'JetBrains Mono',monospace;color:var(--ink);letter-spacing:.02em}
+  .note p{margin:0;font-family:'Cairo',sans-serif;font-size:13.5px;line-height:1.85;color:var(--muted);direction:rtl}
+  .note code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--orange);background:rgba(255,153,0,.09);padding:1px 6px;border-radius:4px;direction:ltr;display:inline-block}
+  .note .k{color:var(--purple)}
+
+  /* ---------- Footer ---------- */
+  footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  .sig{font-family:'Sacramento',cursive;font-size:40px;color:var(--teal);line-height:.9;text-shadow:0 0 22px rgba(45,212,191,.35)}
+  .foot-meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-align:right;line-height:1.9}
+
+  @media (max-width:720px){
+    h1{font-size:30px}
+    .notes{grid-template-columns:1fr}
+    thead th:nth-child(5),tbody td:nth-child(5){display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="eyebrow">AWS · VPC Security Groups · kubeadm HA</div>
+  <h1>Security Groups <span class="thin">— HA Kubernetes Cluster</span></h1>
+  <p class="sub">تصميم الـ firewall الكامل لمشروع VProfile على cluster عالي التوافر: <b style="color:var(--ink)">HAProxy load balancer</b> قدّام <b style="color:var(--ink)">3 control planes</b> و <b style="color:var(--ink)">2 workers</b> — بكل الـ ports المطلوبة من أول نقطة دخول لحد آخر worker.</p>
+
+  <div class="meta-row">
+    <span class="chip">Topology: <b>Stacked etcd HA</b></span>
+    <span class="chip">Region: <b>eu-north-1</b></span>
+    <span class="chip">CNI: <b>Flannel · VXLAN</b></span>
+    <span class="chip">Control-plane endpoint: <b>HAProxy:6443</b></span>
+  </div>
+
+  <hr class="div">
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <span class="lg"><span class="dot" style="background:var(--orange);color:var(--orange)"></span><b>HAProxy&nbsp;SG</b>&nbsp;— entry / load balancer</span>
+    <span class="lg"><span class="dot" style="background:var(--purple);color:var(--purple)"></span><b>Masters&nbsp;SG</b>&nbsp;— control plane ×3</span>
+    <span class="lg"><span class="dot" style="background:var(--teal);color:var(--teal)"></span><b>Workers&nbsp;SG</b>&nbsp;— worker nodes ×2</span>
+  </div>
+
+  <!-- SECTION 1 — TOPOLOGY -->
+  <div class="sec-title"><span class="num">01</span><h2>Traffic flow &amp; port map</h2></div>
+  <div class="diagram">
+    <svg viewBox="0 0 960 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Security group topology">
+      <defs>
+        <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 Z" fill="#4a5b78"/>
+        </marker>
+        <marker id="arrO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 Z" fill="#ff9900"/>
+        </marker>
+        <marker id="arrT" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 Z" fill="#2dd4bf"/>
+        </marker>
+        <style>
+          .nbox{rx:12}
+          .nlabel{font-family:'JetBrains Mono',monospace;font-weight:700;fill:#e6edf3}
+          .nsub{font-family:'JetBrains Mono',monospace;fill:#8b98a5;font-size:10px}
+          .plabel{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700}
+          .pmute{font-family:'JetBrains Mono',monospace;font-size:9.5px;fill:#8b98a5}
+          .flow{stroke:#4a5b78;stroke-width:1.4;fill:none}
+          .flowO{stroke:#ff9900;stroke-width:1.6;fill:none;opacity:.9}
+          .flowT{stroke:#2dd4bf;stroke-width:1.6;fill:none;opacity:.9}
+          .flowDash{stroke-dasharray:4 4}
+        </style>
+      </defs>
+
+      <!-- INTERNET / ADMIN -->
+      <rect x="360" y="18" width="240" height="46" rx="23" fill="#111a2c" stroke="#233045"/>
+      <text x="480" y="40" text-anchor="middle" class="nlabel" font-size="13">Internet · Admin · Users</text>
+      <text x="480" y="55" text-anchor="middle" class="nsub">0.0.0.0/0</text>
+
+      <!-- flow: internet -> haproxy (6443) -->
+      <path class="flowO" d="M440,64 L440,116" marker-end="url(#arrO)"/>
+      <rect x="316" y="78" width="118" height="22" rx="6" fill="#0a0f1a" stroke="#ff9900" opacity=".95"/>
+      <text x="375" y="93" text-anchor="middle" class="plabel" fill="#ff9900">:6443 kubectl/API</text>
+
+      <!-- flow: internet -> workers NodePort (long curve, right side) -->
+      <path class="flowT flowDash" d="M600,44 C 820,60 900,300 830,470" marker-end="url(#arrT)"/>
+      <rect x="800" y="250" width="150" height="34" rx="6" fill="#0a0f1a" stroke="#2dd4bf"/>
+      <text x="875" y="264" text-anchor="middle" class="plabel" fill="#2dd4bf">:30000-32767</text>
+      <text x="875" y="277" text-anchor="middle" class="pmute">NodePort · VProfile</text>
+
+      <!-- HAPROXY -->
+      <rect x="352" y="116" width="176" height="58" rx="12" fill="#1a1206" stroke="#ff9900" stroke-width="1.6"/>
+      <text x="440" y="141" text-anchor="middle" class="nlabel" font-size="14">HAProxy · LB</text>
+      <text x="440" y="159" text-anchor="middle" class="nsub" fill="#ff9900">mode tcp · bind :6443</text>
+
+      <!-- flows haproxy -> masters -->
+      <path class="flow" d="M400,174 C 340,210 210,230 160,262" marker-end="url(#arr)"/>
+      <path class="flow" d="M440,174 L440,262" marker-end="url(#arr)"/>
+      <path class="flow" d="M488,174 C 560,210 700,230 740,262" marker-end="url(#arr)"/>
+      <rect x="470" y="205" width="70" height="20" rx="5" fill="#0a0f1a" stroke="#233045"/>
+      <text x="505" y="219" text-anchor="middle" class="plabel" fill="#ff9900">:6443</text>
+
+      <!-- MASTERS ROW -->
+      <!-- master1 -->
+      <rect x="70" y="262" width="180" height="60" rx="12" fill="#171226" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="160" y="287" text-anchor="middle" class="nlabel" font-size="13">master-1</text>
+      <text x="160" y="305" text-anchor="middle" class="nsub" fill="#a78bfa">apiserver · etcd · scheduler</text>
+      <!-- master2 -->
+      <rect x="350" y="262" width="180" height="60" rx="12" fill="#171226" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="440" y="287" text-anchor="middle" class="nlabel" font-size="13">master-2</text>
+      <text x="440" y="305" text-anchor="middle" class="nsub" fill="#a78bfa">apiserver · etcd · scheduler</text>
+      <!-- master3 -->
+      <rect x="650" y="262" width="180" height="60" rx="12" fill="#171226" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="740" y="287" text-anchor="middle" class="nlabel" font-size="13">master-3</text>
+      <text x="740" y="305" text-anchor="middle" class="nsub" fill="#a78bfa">apiserver · etcd · scheduler</text>
+
+      <!-- etcd peer links between masters -->
+      <path class="flow flowDash" d="M250,300 L350,300"/>
+      <path class="flow flowDash" d="M530,300 L650,300"/>
+      <rect x="255" y="326" width="150" height="20" rx="5" fill="#0a0f1a" stroke="#a78bfa"/>
+      <text x="330" y="340" text-anchor="middle" class="plabel" fill="#a78bfa">:2379-2380 etcd</text>
+
+      <!-- masters -> workers band -->
+      <path class="flow" d="M200,322 C 240,380 300,400 330,438" marker-end="url(#arr)"/>
+      <path class="flow" d="M470,322 C 500,380 560,400 600,438" marker-end="url(#arr)"/>
+      <path class="flow" d="M700,322 C 660,380 600,400 640,438" marker-end="url(#arr)"/>
+
+      <!-- port band label between tiers -->
+      <rect x="300" y="372" width="360" height="42" rx="8" fill="#0a0f1a" stroke="#233045"/>
+      <text x="480" y="389" text-anchor="middle" class="plabel" fill="#a78bfa">:10250 kubelet<tspan fill="#4a5b78">  ·  </tspan><tspan fill="#2dd4bf">:8472/UDP Flannel</tspan></text>
+      <text x="480" y="404" text-anchor="middle" class="pmute">workers → masters :6443 (API)  ·  :10256 kube-proxy</text>
+
+      <!-- WORKERS ROW -->
+      <rect x="240" y="438" width="200" height="62" rx="12" fill="#0d201d" stroke="#2dd4bf" stroke-width="1.6"/>
+      <text x="340" y="464" text-anchor="middle" class="nlabel" font-size="13">worker-1</text>
+      <text x="340" y="483" text-anchor="middle" class="nsub" fill="#2dd4bf">kubelet · kube-proxy · pods</text>
+
+      <rect x="520" y="438" width="200" height="62" rx="12" fill="#0d201d" stroke="#2dd4bf" stroke-width="1.6"/>
+      <text x="620" y="464" text-anchor="middle" class="nlabel" font-size="13">worker-2</text>
+      <text x="620" y="483" text-anchor="middle" class="nsub" fill="#2dd4bf">kubelet · kube-proxy · pods</text>
+
+      <!-- VProfile pods hint -->
+      <rect x="240" y="524" width="480" height="70" rx="10" fill="#0e1524" stroke="#233045" stroke-dasharray="5 4"/>
+      <text x="480" y="546" text-anchor="middle" class="nsub" fill="#8b98a5" font-size="11">VProfile workloads (Pods on workers)</text>
+      <g font-family="'JetBrains Mono',monospace" font-size="10" fill="#c9d1d9">
+        <rect x="258" y="556" width="86" height="26" rx="6" fill="#111a2c" stroke="#2dd4bf" opacity=".8"/><text x="301" y="573" text-anchor="middle">tomcat</text>
+        <rect x="352" y="556" width="86" height="26" rx="6" fill="#111a2c" stroke="#a78bfa" opacity=".8"/><text x="395" y="573" text-anchor="middle">mariadb</text>
+        <rect x="446" y="556" width="96" height="26" rx="6" fill="#111a2c" stroke="#ff9900" opacity=".8"/><text x="494" y="573" text-anchor="middle">rabbitmq</text>
+        <rect x="550" y="556" width="96" height="26" rx="6" fill="#111a2c" stroke="#8b98a5" opacity=".8"/><text x="598" y="573" text-anchor="middle">memcached</text>
+        <rect x="654" y="556" width="52" height="26" rx="6" fill="#111a2c" stroke="#233045"/><text x="680" y="573" text-anchor="middle" fill="#8b98a5">…</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- SECTION 2 — RULE TABLES -->
+  <div class="sec-title"><span class="num">02</span><h2>Inbound rules — per security group</h2></div>
+  <div class="cards">
+
+    <!-- HAPROXY SG -->
+    <div class="card">
+      <div class="card-head">
+        <div class="l">
+          <span class="badge-role" style="background:var(--orange)"></span>
+          <div>
+            <h3>HAProxy-SG</h3>
+            <span class="role">نقطة الدخول للـ API — load balancer قدّام الـ masters</span>
+          </div>
+        </div>
+        <span class="count">×1 node</span>
+      </div>
+      <table>
+        <thead><tr><th>Type</th><th>Proto</th><th>Port</th><th>Source</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>Custom TCP</td><td class="proto">TCP</td><td class="port">6443</td><td class="src-open">0.0.0.0/0</td><td class="why">الـ kube-apiserver endpoint — كل الـ kubectl والـ nodes بتكلّمه</td></tr>
+          <tr><td>SSH</td><td class="proto">TCP</td><td class="port">22</td><td class="src-admin">My-IP/32</td><td class="why">إدارة — قيّده على IP‑ك مش <code style="all:unset;font-family:monospace;color:var(--danger)">0.0.0.0/0</code></td></tr>
+          <tr><td>HTTP<span class="tag opt">OPTIONAL</span></td><td class="proto">TCP</td><td class="port">80</td><td class="src-open">0.0.0.0/0</td><td class="why">بس لو نفس الماكينة هتوزّع ترافيك التطبيق (ingress) — مش للـ control plane</td></tr>
+          <tr><td>HTTPS<span class="tag opt">OPTIONAL</span></td><td class="proto">TCP</td><td class="port">443</td><td class="src-open">0.0.0.0/0</td><td class="why">نفس القصة — امسحهم لو الماكينة للـ API بس</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- MASTERS SG -->
+    <div class="card">
+      <div class="card-head">
+        <div class="l">
+          <span class="badge-role" style="background:var(--purple)"></span>
+          <div>
+            <h3>Masters-SG</h3>
+            <span class="role">الـ control plane — apiserver · etcd · scheduler · controller-manager</span>
+          </div>
+        </div>
+        <span class="count">×3 nodes</span>
+      </div>
+      <table>
+        <thead><tr><th>Type</th><th>Proto</th><th>Port</th><th>Source</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>Custom TCP</td><td class="proto">TCP</td><td class="port">6443</td><td><span class="src-sg">HAProxy-SG</span> + <span class="src-teal">Workers-SG</span></td><td class="why">Kubernetes API server — من الـ LB والـ workers</td></tr>
+          <tr><td>Custom TCP</td><td class="proto">TCP</td><td class="port">2379-2380</td><td class="src-sg">Masters-SG (self)</td><td class="why">etcd client + peer — بين الـ 3 masters بس</td></tr>
+          <tr><td>Custom TCP</td><td class="proto">TCP</td><td class="port">10250</td><td><span class="src-sg">Masters-SG</span> + <span class="src-teal">Workers-SG</span></td><td class="why">Kubelet API — logs / exec / metrics</td></tr>
+          <tr><td>Custom TCP</td><td class="proto">TCP</td><td class="port">10259</td><td class="src-sg">Masters-SG (self)</td><td class="why">kube-scheduler</td></tr>
+          <tr><td>Custom TCP</td><td class="proto">TCP</td><td class="port">10257</td><td class="src-sg">Masters-SG (self)</td><td class="why">kube-controller-manager</td></tr>
+          <tr><td>Custom UDP</td><td class="proto">UDP</td><td class="port">8472</td><td><span class="src-sg">Masters-SG</span> + <span class="src-teal">Workers-SG</span></td><td class="why">Flannel VXLAN — الـ pod network overlay</td></tr>
+          <tr><td>SSH</td><td class="proto">TCP</td><td class="port">22</td><td class="src-admin">My-IP/32</td><td class="why">إدارة</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- WORKERS SG -->
+    <div class="card">
+      <div class="card-head">
+        <div class="l">
+          <span class="badge-role" style="background:var(--teal)"></span>
+          <div>
+            <h3>Workers-SG</h3>
+            <span class="role">الـ worker nodes — هنا بتشتغل الـ VProfile pods</span>
+          </div>
+        </div>
+        <span class="count">×2 nodes</span>
+      </div>
+      <table>
+        <thead><tr><th>Type</th><th>Proto</th><th>Port</th><th>Source</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>Custom TCP</td><td class="proto">TCP</td><td class="port">10250</td><td><span class="src-sg">Masters-SG</span> + <span class="src-teal">Workers-SG</span></td><td class="why">Kubelet API — الـ control plane بيتحكم في الـ node</td></tr>
+          <tr><td>Custom TCP</td><td class="proto">TCP</td><td class="port">10256</td><td><span class="src-sg">Masters-SG</span> + <span class="src-teal">Workers-SG</span></td><td class="why">kube-proxy health check</td></tr>
+          <tr><td>Custom TCP</td><td class="proto">TCP</td><td class="port">30000-32767</td><td class="src-open">0.0.0.0/0</td><td class="why">NodePort Services — نقطة دخول تطبيق VProfile من بره</td></tr>
+          <tr><td>Custom UDP</td><td class="proto">UDP</td><td class="port">8472</td><td><span class="src-sg">Masters-SG</span> + <span class="src-teal">Workers-SG</span></td><td class="why">Flannel VXLAN — الـ pod network overlay</td></tr>
+          <tr><td>SSH</td><td class="proto">TCP</td><td class="port">22</td><td class="src-admin">My-IP/32</td><td class="why">إدارة</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SECTION 3 — NOTES -->
+  <div class="sec-title"><span class="num">03</span><h2>Design decisions &amp; gotchas</h2></div>
+  <div class="notes">
+    <div class="note p">
+      <h4>SG reference &gt; CIDR</h4>
+      <p>استخدم الـ <span class="k">Security Group ID</span> كـ source مش <code>0.0.0.0/0</code>. يعني الـ 6443 على الـ masters مصدره <span class="k">HAProxy-SG</span> و <span class="k">Workers-SG</span> نفسهم — كده لو الـ IPs اتغيّرت الـ rules تفضل شغّالة، والـ blast radius يفضل مقفول.</p>
+    </div>
+    <div class="note">
+      <h4>HAProxy = mode tcp</h4>
+      <p>الـ 6443 لازم <code>mode tcp</code> (Layer 4 pass-through). لو عملته <code>mode http</code> هيكسر الـ mTLS بتاع الـ apiserver. الـ HAProxy بيعدّي الـ TLS زي ما هو من غير ما يفكّه.</p>
+    </div>
+    <div class="note t">
+      <h4>Flannel port ≠ Calico</h4>
+      <p>الرقم <code>8472/UDP</code> ده خاص بـ <span style="color:var(--teal)">Flannel VXLAN</span>. لو غيّرت لـ Calico الأرقام تختلف: <code>179/TCP</code> BGP و <code>4789/UDP</code> VXLAN. اعرف CNI بتاعك قبل ما تقفل الـ SG.</p>
+    </div>
+    <div class="note d">
+      <h4>Single LB = SPOF</h4>
+      <p>الـ HAProxy الواحدة دي هي نفسها <span style="color:var(--danger)">single point of failure</span>. الحل production: <code>keepalived + VIP</code> بين HAProxyتين، أو تستخدم <span style="color:var(--danger)">NLB</span> مُدار على AWS بدل ما تعملها بإيدك.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="sig">ALnaqib</div>
+    <div class="foot-meta">
+      HA Kubernetes · VProfile Project<br>
+      kubeadm · stacked etcd · Flannel CNI<br>
+      ports verified · kubernetes.io/docs
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
