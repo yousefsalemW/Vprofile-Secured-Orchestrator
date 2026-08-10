@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1440" viewBox="0 0 2400 1440">
+<defs>
+<marker id="ah-0C5F58" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#0C5F58"/></marker>
+<marker id="ah-4E32AE" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#4E32AE"/></marker>
+<marker id="ah-9E4E06" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#9E4E06"/></marker>
+<marker id="ah-655C4B" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="#655C4B"/></marker>
+</defs>
+<rect width="2400" height="1440" fill="#F2EADA"/>
+<text x="70.0" y="96.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="32" fill="#9E4E06" font-weight="bold" text-anchor="start" letter-spacing="3.4">ARCHITECTURE</text>
+<text x="66.0" y="176.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="64" fill="#1E1A13" font-weight="bold" text-anchor="start">VProfile on Kubernetes</text>
+<text x="70.0" y="230.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="29" fill="#655C4B" font-weight="bold" text-anchor="start">Four microservices on a self-managed, highly available cluster inside an AWS VPC</text>
+<rect x="66.0" y="286.0" width="440.0" height="1064.0" rx="22" ry="22" fill="#E8DDC6" stroke="#D3C6AC" stroke-width="2"/>
+<text x="98.0" y="342.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="23" fill="#9E4E06" font-weight="bold" text-anchor="start" letter-spacing="2.4">BUILD &amp; SUPPLY CHAIN</text>
+<rect x="92.0" y="378.0" width="388.0" height="207.5" rx="16" ry="16" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<circle cx="155.0" cy="445.0" r="37.0" fill="#E8DDC6"/>
+<g transform="translate(135.76,425.76) scale(1.6033)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"></circle><path d="M20 21a8 8 0 0 0-16 0"></path></g>
+<text x="210.0" y="456.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="29" fill="#1E1A13" font-weight="bold" text-anchor="start">Developer</text>
+<text x="118.0" y="526.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="23" fill="#655C4B" font-weight="bold" text-anchor="start">Dockerfiles + manifests</text>
+<rect x="92.0" y="621.5" width="388.0" height="207.5" rx="16" ry="16" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<circle cx="155.0" cy="688.5" r="37.0" fill="#E8DDC6"/>
+<g transform="translate(135.76,669.26) scale(1.6033)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"></path><path d="m18 15 4-4"></path><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"></path></g>
+<text x="210.0" y="699.5" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="29" fill="#1E1A13" font-weight="bold" text-anchor="start">Multi-stage build</text>
+<text x="118.0" y="769.5" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="23" fill="#655C4B" font-weight="bold" text-anchor="start">non-root · pinned bases</text>
+<rect x="92.0" y="865.0" width="388.0" height="207.5" rx="16" ry="16" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<circle cx="155.0" cy="932.0" r="37.0" fill="#E8DDC6"/>
+<g transform="translate(135.76,912.76) scale(1.6033)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><circle cx="12" cy="12" r="3"></circle><path d="m16 16-1.9-1.9"></path></g>
+<text x="210.0" y="943.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="29" fill="#1E1A13" font-weight="bold" text-anchor="start">Trivy scan</text>
+<text x="118.0" y="1013.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="23" fill="#655C4B" font-weight="bold" text-anchor="start">blocks HIGH / CRITICAL</text>
+<rect x="92.0" y="1108.5" width="388.0" height="207.5" rx="16" ry="16" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<circle cx="155.0" cy="1175.5" r="37.0" fill="#E8DDC6"/>
+<g transform="translate(135.76,1156.26) scale(1.6033)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"></path><path d="M10 21.9V14L2.1 9.1"></path><path d="m10 14 11.9-6.9"></path><path d="M14 19.8v-8.1"></path><path d="M18 17.5V9.4"></path></g>
+<text x="210.0" y="1186.5" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="29" fill="#1E1A13" font-weight="bold" text-anchor="start">Docker Hub</text>
+<text x="118.0" y="1256.5" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="23" fill="#655C4B" font-weight="bold" text-anchor="start">alnaqib/*</text>
+<polyline points="286.0,591.5 286.0,613.5" fill="none" stroke="#4E32AE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-4E32AE)"/>
+<polyline points="286.0,835.0 286.0,857.0" fill="none" stroke="#4E32AE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-4E32AE)"/>
+<polyline points="286.0,1078.5 286.0,1100.5" fill="none" stroke="#4E32AE" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-4E32AE)"/>
+<rect x="556.0" y="286.0" width="1778.0" height="1064.0" rx="24" ry="24" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2.5"/>
+<text x="592.0" y="344.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" fill="#9E4E06" font-weight="bold" text-anchor="start" letter-spacing="2.4">AWS VPC</text>
+<text x="766.0" y="344.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="23" fill="#655C4B" font-weight="bold" text-anchor="start">eu-north-1  ·  2 Availability Zones  ·  4 subnets</text>
+<rect x="586.0" y="370.0" width="1718.0" height="210.0" rx="18" ry="18" fill="#E8DDC6" stroke="#D3C6AC" stroke-width="2"/>
+<text x="614.0" y="414.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="start" letter-spacing="2.4">PUBLIC SUBNETS</text>
+<rect x="614.0" y="434.0" width="536.7" height="134.0" rx="14" ry="14" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<circle cx="675.0" cy="501.0" r="35.0" fill="#E8DDC6"/>
+<g transform="translate(656.80,482.80) scale(1.5167)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></g>
+<text x="726.0" y="494.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="28" fill="#1E1A13" font-weight="bold" text-anchor="start">Internet Gateway</text>
+<text x="726.0" y="530.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="start">users enter here  ·  :80</text>
+<rect x="1176.7" y="434.0" width="536.7" height="134.0" rx="14" ry="14" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<circle cx="1237.7" cy="501.0" r="35.0" fill="#E8DDC6"/>
+<g transform="translate(1219.47,482.80) scale(1.5167)" fill="none" stroke="#0C5F58" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></g>
+<text x="1288.7" y="494.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="28" fill="#1E1A13" font-weight="bold" text-anchor="start">HAProxy</text>
+<text x="1288.7" y="530.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="start">:80 app  ·  :6443 kube-api</text>
+<rect x="1739.3" y="434.0" width="536.7" height="134.0" rx="14" ry="14" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<circle cx="1800.3" cy="501.0" r="35.0" fill="#E8DDC6"/>
+<g transform="translate(1782.13,482.80) scale(1.5167)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m18 14 4 4-4 4"></path><path d="m18 2 4 4-4 4"></path><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"></path><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"></path><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"></path></g>
+<text x="1851.3" y="494.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="28" fill="#1E1A13" font-weight="bold" text-anchor="start">NAT Gateway</text>
+<text x="1851.3" y="530.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="start">private nodes reach out</text>
+<rect x="586.0" y="638.0" width="1718.0" height="710.0" rx="18" ry="18" fill="#E8DDC6" stroke="#D3C6AC" stroke-width="2"/>
+<text x="614.0" y="682.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="start" letter-spacing="2.4">PRIVATE SUBNETS</text>
+<rect x="686.0" y="700.0" width="1592.0" height="622.0" rx="18" ry="18" fill="#FFFDF7" stroke="#0C5F58" stroke-width="3.5"/>
+<text x="714.0" y="748.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="22" fill="#0C5F58" font-weight="bold" text-anchor="start" letter-spacing="2.2">KUBERNETES 1.36</text>
+<text x="1016.0" y="748.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="22" fill="#655C4B" font-weight="bold" text-anchor="start">kubeadm  ·  CRI-O  ·  Calico  ·  RHEL 9</text>
+<rect x="712.0" y="770.0" width="1540.0" height="126.0" rx="14" ry="14" fill="#E8DDC6" stroke="#D3C6AC" stroke-width="2"/>
+<text x="738.0" y="820.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="26" fill="#1E1A13" font-weight="bold" text-anchor="start">Control plane</text>
+<text x="738.0" y="858.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="start">3 × master  ·  HA via HAProxy :6443</text>
+<circle cx="1312.0" cy="833.0" r="34" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<g transform="translate(1294.15,815.15) scale(1.4875)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"></path><path d="M12 2v2"></path><path d="M12 22v-2"></path><path d="m17 20.66-1-1.73"></path><path d="M11 10.27 7 3.34"></path><path d="m20.66 17-1.73-1"></path><path d="m3.34 7 1.73 1"></path><path d="M14 12h8"></path><path d="M2 12h2"></path><path d="m20.66 7-1.73 1"></path><path d="m3.34 17 1.73-1"></path><path d="m17 3.34-1 1.73"></path><path d="m11 13.73-4 6.93"></path></g>
+<circle cx="1424.0" cy="833.0" r="34" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<g transform="translate(1406.15,815.15) scale(1.4875)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"></path><path d="M12 2v2"></path><path d="M12 22v-2"></path><path d="m17 20.66-1-1.73"></path><path d="M11 10.27 7 3.34"></path><path d="m20.66 17-1.73-1"></path><path d="m3.34 7 1.73 1"></path><path d="M14 12h8"></path><path d="M2 12h2"></path><path d="m20.66 7-1.73 1"></path><path d="m3.34 17 1.73-1"></path><path d="m17 3.34-1 1.73"></path><path d="m11 13.73-4 6.93"></path></g>
+<circle cx="1536.0" cy="833.0" r="34" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<g transform="translate(1518.15,815.15) scale(1.4875)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"></path><path d="M12 2v2"></path><path d="M12 22v-2"></path><path d="m17 20.66-1-1.73"></path><path d="M11 10.27 7 3.34"></path><path d="m20.66 17-1.73-1"></path><path d="m3.34 7 1.73 1"></path><path d="M14 12h8"></path><path d="M2 12h2"></path><path d="m20.66 7-1.73 1"></path><path d="m3.34 17 1.73-1"></path><path d="m17 3.34-1 1.73"></path><path d="m11 13.73-4 6.93"></path></g>
+<text x="2226.0" y="824.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="end">etcd  ·  kube-apiserver</text>
+<text x="2226.0" y="860.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="end">scheduler  ·  controller-manager</text>
+<rect x="712.0" y="922.0" width="1540.0" height="374.0" rx="14" ry="14" fill="#E8DDC6" stroke="#D3C6AC" stroke-width="2"/>
+<text x="738.0" y="970.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="26" fill="#1E1A13" font-weight="bold" text-anchor="start">Worker nodes</text>
+<text x="958.0" y="970.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="22" fill="#655C4B" font-weight="bold" text-anchor="start">3 × RHEL 9</text>
+<circle cx="1162.0" cy="960.0" r="30" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<g transform="translate(1146.25,944.25) scale(1.3125)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></g>
+<circle cx="1266.0" cy="960.0" r="30" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<g transform="translate(1250.25,944.25) scale(1.3125)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></g>
+<circle cx="1370.0" cy="960.0" r="30" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<g transform="translate(1354.25,944.25) scale(1.3125)" fill="none" stroke="#3B3327" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect><rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect><line x1="6" x2="6.01" y1="6" y2="6"></line><line x1="6" x2="6.01" y1="18" y2="18"></line></g>
+<text x="2226.0" y="968.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="end" letter-spacing="2.4">NAMESPACE  VPROFILE</text>
+<rect x="738.0" y="992.0" width="355.5" height="230.0" rx="14" ry="14" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<circle cx="799.0" cy="1049.0" r="35.0" fill="#E8DDC6"/>
+<g transform="translate(780.80,1030.80) scale(1.5167)" fill="none" stroke="#0C5F58" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M10 4v4"></path><path d="M2 8h20"></path><path d="M6 4v4"></path></g>
+<text x="850.0" y="1040.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="30" fill="#1E1A13" font-weight="bold" text-anchor="start">app01</text>
+<text x="850.0" y="1074.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="22" fill="#0C5F58" font-weight="bold" text-anchor="start">:8080</text>
+<text x="764.0" y="1128.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" fill="#3B3327" font-weight="bold" text-anchor="start">Tomcat 9 · WAR</text>
+<text x="764.0" y="1162.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="20" fill="#655C4B" font-weight="bold" text-anchor="start">2 replicas · RollingUpdate</text>
+<rect x="1115.5" y="992.0" width="355.5" height="230.0" rx="14" ry="14" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<circle cx="1176.5" cy="1049.0" r="35.0" fill="#E8DDC6"/>
+<g transform="translate(1158.30,1030.80) scale(1.5167)" fill="none" stroke="#0C5F58" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></g>
+<text x="1227.5" y="1040.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="30" fill="#1E1A13" font-weight="bold" text-anchor="start">db01</text>
+<text x="1227.5" y="1074.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="22" fill="#0C5F58" font-weight="bold" text-anchor="start">:3306</text>
+<text x="1141.5" y="1128.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" fill="#3B3327" font-weight="bold" text-anchor="start">MySQL 8.0</text>
+<text x="1141.5" y="1162.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="20" fill="#655C4B" font-weight="bold" text-anchor="start">PVC RWO · Recreate</text>
+<rect x="1493.0" y="992.0" width="355.5" height="230.0" rx="14" ry="14" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<circle cx="1554.0" cy="1049.0" r="35.0" fill="#E8DDC6"/>
+<g transform="translate(1535.80,1030.80) scale(1.5167)" fill="none" stroke="#0C5F58" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></g>
+<text x="1605.0" y="1040.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="30" fill="#1E1A13" font-weight="bold" text-anchor="start">mc01</text>
+<text x="1605.0" y="1074.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="22" fill="#0C5F58" font-weight="bold" text-anchor="start">:11211</text>
+<text x="1519.0" y="1128.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" fill="#3B3327" font-weight="bold" text-anchor="start">Memcached</text>
+<text x="1519.0" y="1162.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="20" fill="#655C4B" font-weight="bold" text-anchor="start">read-through cache</text>
+<rect x="1870.5" y="992.0" width="355.5" height="230.0" rx="14" ry="14" fill="#FFFDF7" stroke="#D3C6AC" stroke-width="2"/>
+<circle cx="1931.5" cy="1049.0" r="35.0" fill="#E8DDC6"/>
+<g transform="translate(1913.30,1030.80) scale(1.5167)" fill="none" stroke="#0C5F58" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"></path><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"></path></g>
+<text x="1982.5" y="1040.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="30" fill="#1E1A13" font-weight="bold" text-anchor="start">rmq01</text>
+<text x="1982.5" y="1074.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="22" fill="#0C5F58" font-weight="bold" text-anchor="start">:5672</text>
+<text x="1896.5" y="1128.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="24" fill="#3B3327" font-weight="bold" text-anchor="start">RabbitMQ</text>
+<text x="1896.5" y="1162.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="20" fill="#655C4B" font-weight="bold" text-anchor="start">async messaging</text>
+<polyline points="1156.7,501.0 1168.7,501.0" fill="none" stroke="#0C5F58" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-0C5F58)"/>
+<polyline points="1385.0,568.0 1385.0,622.0 652.0,622.0 652.0,1107.0 728.0,1107.0" fill="none" stroke="#0C5F58" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-0C5F58)"/>
+<text x="670.0" y="616.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#0C5F58" font-weight="bold" text-anchor="start">NodePort  :30080</text>
+<polyline points="1565.0,568.0 1565.0,758.0" fill="none" stroke="#9E4E06" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 9" marker-end="url(#ah-9E4E06)"/>
+<text x="1583.0" y="677.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#9E4E06" font-weight="bold" text-anchor="start">:6443  control-plane endpoint</text>
+<polyline points="488.0,1212.2 608.0,1212.2 608.0,960.0 702.0,960.0" fill="none" stroke="#4E32AE" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="9 8" marker-end="url(#ah-4E32AE)"/>
+<polyline points="2218.0,690.0 2218.0,576.0" fill="none" stroke="#655C4B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8 8" marker-end="url(#ah-655C4B)"/>
+<polyline points="915.8,1224.0 915.8,1248.0" fill="none" stroke="#0C5F58" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="915.8,1248.0 2048.2,1248.0" fill="none" stroke="#0C5F58" stroke-width="3.4" stroke-linecap="round"/>
+<polyline points="1293.2,1248.0 1293.2,1228.0" fill="none" stroke="#0C5F58" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-0C5F58)"/>
+<polyline points="1670.8,1248.0 1670.8,1228.0" fill="none" stroke="#0C5F58" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-0C5F58)"/>
+<polyline points="2048.2,1248.0 2048.2,1228.0" fill="none" stroke="#0C5F58" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#ah-0C5F58)"/>
+<line x1="70" y1="1388" x2="118" y2="1388" stroke="#0C5F58" stroke-width="4.5" stroke-linecap="round"/>
+<text x="132.0" y="1396.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="start">request path</text>
+<line x1="314.02132812499997" y1="1388" x2="362.02132812499997" y2="1388" stroke="#9E4E06" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="10 9"/>
+<text x="376.0" y="1396.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="start">control-plane endpoint</text>
+<line x1="659.50546875" y1="1388" x2="707.50546875" y2="1388" stroke="#4E32AE" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="9 8"/>
+<text x="721.5" y="1396.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="start">image supply chain</text>
+<line x1="972.3917031249999" y1="1388" x2="1020.3917031249999" y2="1388" stroke="#655C4B" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="8 8"/>
+<text x="1034.4" y="1396.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="start">egress</text>
+<text x="2330.0" y="1396.0" font-family="Arial, Liberation Sans, Helvetica, sans-serif" font-size="21" fill="#655C4B" font-weight="bold" text-anchor="end">ALnaqib  ·  Yousef Salem</text>
+</svg>
